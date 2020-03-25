@@ -1,0 +1,26 @@
+{
+  "name": "oc-api",
+  "version": "1.0.0",
+  "description": "api for oc-client",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon dist/index.js",
+    "build:dev": "tsc --watch --preserveWatchOutput",
+    "dev": "npm run build:dev & npm run start:dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/helmet": "0.0.45",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "knex": "^0.20.13"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.3",
+    "nodemon": "^2.0.2"
+  }
+}
