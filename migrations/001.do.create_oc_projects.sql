@@ -1,7 +1,7 @@
 CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
-  imgUrls TEXT[],
   name TEXT NOT NULL,
+  img_urls TEXT[],
   description  TEXT,
   address TEXT,
   architect TEXT
