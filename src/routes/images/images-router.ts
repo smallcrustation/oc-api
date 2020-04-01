@@ -1,13 +1,21 @@
 import express from 'express'
+import ImagesService from './images-service'
 
 const imagesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-imagesRouter
-  .route('/')
-  .get((req, res, next) =>{
-    res.json({'testing': 'imagesRouter'})
-  })
+imagesRouter.route('/').get(async (req, res, next) => {
+  try {
 
+    
 
-  export default imagesRouter
+    const projects = await ImagesService.getProjects(req.app.get('db'))
+    res.json({ projects })
+    next()
+  } catch (e) {
+    next(e)
+  }
+  // res.json({'testing': 'imagesRouter'})
+})
+
+export default imagesRouter

@@ -1,6 +1,7 @@
-import express from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
+import {NODE_ENV} from './config'
 
 import imagesRouter from './routes/images/images-router'
 
@@ -13,9 +14,21 @@ app.use(cors())
 app.use(helmet())
 
 app.get('/', (req, res) => {
-  res.send('Home')
+  res.send('OC API Home')
 })
 
 app.use('/api/images', imagesRouter)
+
+// ERROR HANDLING
+app.use((error: Error, req: Request , res: Response , next: NextFunction)=> {
+  let response
+  if (NODE_ENV === 'production') {
+    response = { error: 'Server error' }
+  } else {
+    console.error(error)
+    response = { error: error.message, object: error }
+  }
+  res.status(500).json(response)
+})
 
 export = app
