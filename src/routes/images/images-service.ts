@@ -6,6 +6,7 @@ const ImagesService = {
       .from('projects')
       .select('*')
   }
+  
 }
 
 export default ImagesService
