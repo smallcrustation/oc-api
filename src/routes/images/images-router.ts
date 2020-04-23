@@ -5,24 +5,37 @@ import ImagesService from './images-service'
 const imagesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-imagesRouter.route('/').get(async (req, res, next) => {
-  try {
-    // let cloudinaryData = await cloudinary.search
-    //   .expression('folder:oc/highFlyer')
-    //   // .sort_by('public_id', 'desc')
-    //   .execute()
 
-    // console.log(cloudinaryData)
-    let imgUrls = await ImagesService.getProjectImageUrls()
-    const projects = await ImagesService.getProjects(req.app.get('db'))
-    // res.json({ projects, cloudinaryData })
-    res.json({ imgUrls })
-    // res.json({cloudinaryData})
-    next()
+// Project images are received through the file name they are held in on cloudinary
+// this will list all the folders so you have all the project/folder names to get images from
+imagesRouter.route('/project-folders').get(async (req, res, next) => {
+  try {
+    let projectsList = await ImagesService.getListProjectFolders()
+    // console.log(projectsList)
+    res.json({projectsList}).end()
+    
+    
   } catch (e) {
     next(e)
   }
-  // res.json({'testing': 'imagesRouter'})
+}) 
+
+imagesRouter
+// get Project data from our db and cloudinary image urls
+.route('/:projectName').get(async (req, res, next) => {
+  const projectName: string = req.params.projectName
+  try {
+    let imgUrls = await ImagesService.getProjectImageUrls(projectName)
+
+    const project = await ImagesService.getProjectByName(req.app.get('db'), projectName)
+    return res.status(200).json({ project, imgUrls }).end()
+
+   
+  } catch (e) {
+    next(e)
+  }
 })
+
+
 
 export default imagesRouter

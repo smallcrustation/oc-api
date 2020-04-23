@@ -3,15 +3,57 @@ TRUNCATE projects RESTART IDENTITY CASCADE;
 INSERT INTO projects (name, img_urls, description, address, architect)
 VALUES
   (
-    'Project One',
-    '{"https://i.imgur.com/JrdChYg.jpg", "www.2pic.com"}',
+    'boldLad',
+    '{}',
     null,
     null,
     null
   ),
   (
-    'Project Two',
-    '{"www.1pic.com", "www.2pic.com"}',
+    'castilla',
+    '{}',
+    null,
+    null,
+    null
+  ),
+  (
+    'halsey104',
+    '{}',
+    null,
+    null,
+    null
+  ),
+  (
+    'halsey106',
+    '{}',
+    null,
+    null,
+    null
+  ),
+  (
+    'highFlyer',
+    '{}',
+    null,
+    null,
+    null
+  ),
+  (
+    'nativeDancer8124',
+    '{}',
+    null,
+    null,
+    null
+  ),
+  (
+    'nativeDancer8362',
+    '{}',
+    null,
+    null,
+    null
+  ),
+  (
+    'southePointe',
+    '{}',
     null,
     null,
     null

@@ -10,6 +10,10 @@ const app = express()
 // morgan logger
 
 // app.use(morgan)??
+// *********  DON'T FORGET TO CHANGE THIS cors()**************
+// app.use(cors({
+//   origin: `http://localhost:3000`
+// }));
 app.use(cors())
 app.use(helmet())
 
