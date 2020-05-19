@@ -20,6 +20,18 @@ imagesRouter.route('/project-folders').get(async (req, res, next) => {
   }
 }) 
 
+// fetch from cloudinary api project URLS
+imagesRouter.route('/set-project-urls').get(async (req, res, next) => {
+  try {
+    // call on cloudinary api from images-service
+    ImagesService.updateProjectsUrls(req.app.get('db'))
+    // save project urls to our database
+
+  } catch (e) {
+    next(e)
+  }
+}) 
+
 imagesRouter
 // get Project data from our db and cloudinary image urls
 .route('/:projectName').get(async (req, res, next) => {
