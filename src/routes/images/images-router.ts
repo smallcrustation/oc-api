@@ -37,33 +37,33 @@ imagesRouter.route('/projects').get(async (req, res, next) => {
 
 // #### ------------------- MAKE OBSOLETE ------------------- ####
 
-imagesRouter
-// get Project data from our db and cloudinary image urls
-.route('/:projectName').get(async (req, res, next) => {
-  const projectName: string = req.params.projectName
-  try {
-    let imgUrls = await ImagesService.getProjectImageUrls(projectName)
+// imagesRouter
+// // get Project data from our db and cloudinary image urls
+// .route('/:projectName').get(async (req, res, next) => {
+//   const projectName: string = req.params.projectName
+//   try {
+//     let imgUrls = await ImagesService.getProjectImageUrls(projectName)
 
-    const project = await ImagesService.getProjectByName(req.app.get('db'), projectName)
-    return res.status(200).json({ project, imgUrls }).end()
+//     const project = await ImagesService.getProjectByName(req.app.get('db'), projectName)
+//     return res.status(200).json({ project, imgUrls }).end()
 
    
-  } catch (e) {
-    next(e)
-  }
+//   } catch (e) {
+//     next(e)
+//   }
 
-  // fetch from cloudinary api project URLS
-imagesRouter.route('/set-project-urls').get(async (req, res, next) => {
-  try {
-    // call on cloudinary api from images-service
-    ImagesService.updateProjectsUrls(req.app.get('db'))
-    // save project urls to our database
+//   // fetch from cloudinary api project URLS
+// imagesRouter.route('/set-project-urls').get(async (req, res, next) => {
+//   try {
+//     // call on cloudinary api from images-service
+//     ImagesService.updateProjectsUrls(req.app.get('db'))
+//     // save project urls to our database
 
-  } catch (e) {
-    next(e)
-  }
-}) 
-})
+//   } catch (e) {
+//     next(e)
+//   }
+// }) 
+// })
 
 
 

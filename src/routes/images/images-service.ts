@@ -2,6 +2,7 @@ import Knex from 'knex'
 import cloudTypes, { v2 as cloudinary } from 'cloudinary'
 
 const ImagesService = {
+  // DATABASE SERVICES
   getAllProjects(db: Knex) {
     return db.from('projects').select('*')
   },
@@ -21,11 +22,12 @@ const ImagesService = {
     .update({'img_urls': imgUrls})
   },
 
+  // CLOUDINARY SERVICES
   async getProjectImageUrls(project: string) {
     try {
       // console.log('getProjectImageUrls')
       let cloudinaryData = await cloudinary.search
-        .expression(`folder:oc/${project}`)
+        .expression(`folder:oc/projects${project}`)
         // .sort_by('public_id', 'desc')
         .execute()
 
@@ -54,7 +56,7 @@ const ImagesService = {
 
   async getListProjectFolders(){
     try{
-      let projectsFoldersList = await cloudinary.api.sub_folders('oc')
+      let projectsFoldersList = await cloudinary.api.sub_folders('oc/projects')
       // console.log(projectsFoldersList.folders)
       return projectsFoldersList.folders
       
