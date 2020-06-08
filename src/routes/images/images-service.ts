@@ -27,7 +27,7 @@ const ImagesService = {
     try {
       // console.log('getProjectImageUrls')
       let cloudinaryData = await cloudinary.search
-        .expression(`folder:oc/projects${project}`)
+        .expression(`folder:oc/projects/${project}`)
         // .sort_by('public_id', 'desc')
         .execute()
 

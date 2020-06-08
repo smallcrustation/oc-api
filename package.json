@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "api for oc-client",
   "main": "index.js",
+  "engines": {"node": "10.16.0"},
   "scripts": {
     "start:dev": "nodemon dist/index.js",
     "build:dev": "tsc --watch --preserveWatchOutput",
