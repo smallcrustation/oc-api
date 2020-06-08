@@ -10,14 +10,11 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "postinstall": "npm run build",
-
     "deploy": "git push heroku master",
-
     "start:dev": "nodemon dist/server.js",
     "build:dev": "tsc --watch --preserveWatchOutput",
     "dev": "npm run build:dev & npm run start:dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "migrate": "postgrator --config postgrator-config.ts",
     "migrate:dev": "postgrator --config postgrator-config.ts",
     "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate",
@@ -34,7 +31,8 @@
     "express": "^4.17.1",
     "helmet": "^3.22.0",
     "knex": "^0.20.13",
-    "pg": "^7.18.2"
+    "pg": "^7.18.2",
+    "typescript": "^3.9.5"
   },
   "devDependencies": {
     "@types/express": "^4.17.3",
