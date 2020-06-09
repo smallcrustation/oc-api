@@ -14,14 +14,6 @@ const ImagesService = {
           .where({name: projectName})
   },
 
-  updateProjectByName(db: Knex, projectName: string, imgUrls: string[]){
-    return db
-    .from('projects')
-    // .select('*')
-    .where({name: projectName})
-    .update({'img_urls': imgUrls})
-  },
-
   // CLOUDINARY SERVICES
   async getProjectImageUrls(project: string) {
     try {
@@ -65,12 +57,22 @@ const ImagesService = {
     }
   },
 
+  updateProjectByName(db: Knex, projectName: string, imgUrls: string[]){
+    console.log('##### -------- HERE ---------- ####')
+    console.log(projectName)
+    return db
+    .from('projects')
+    // .select('*')
+    .where({name: projectName})
+    .update({'img_urls': imgUrls})
+  },
+
   async updateProjectsUrls(db: Knex){
     try{
       const projectsList = await this.getListProjectFolders()
-      console.log('##### --------- HERE ------------ #####')
+      // console.log(projectsList)
+      console.log(db)
 
-      console.log(projectsList)
       for(let i=0; i<projectsList.length; i++){
         // get project name
         let projectName = projectsList[i].name
