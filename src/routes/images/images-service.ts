@@ -68,7 +68,9 @@ const ImagesService = {
   async updateProjectsUrls(db: Knex){
     try{
       const projectsList = await this.getListProjectFolders()
-      // console.log(projectsList)
+      console.log('##### --------- HERE ------------ #####')
+
+      console.log(projectsList)
       for(let i=0; i<projectsList.length; i++){
         // get project name
         let projectName = projectsList[i].name
