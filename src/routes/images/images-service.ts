@@ -22,17 +22,12 @@ const ImagesService = {
   // CLOUDINARY SERVICES
   async getProjectImageUrls(project: string) {
     try {
-      // console.log('getProjectImageUrls')
       let cloudinaryData = await cloudinary.search
         .expression(`folder:oc/projects/${project}`)
         // .sort_by('public_id', 'desc')
         .execute()
 
-      // console.log('cloudinaryData')
-
       let imgUrls: Array<string> = []
-
-      // console.log(cloudinaryData.resources.length)
 
       for (let i = 0; i < cloudinaryData.resources.length; i++) {
         if (cloudinaryData.resources[i].url) {
@@ -54,7 +49,6 @@ const ImagesService = {
   async getListProjectFolders() {
     try {
       let projectsFoldersList = await cloudinary.api.sub_folders('oc/projects')
-      // console.log(projectsFoldersList.folders)
       return projectsFoldersList.folders
     } catch (e) {
       return e
@@ -66,8 +60,8 @@ const ImagesService = {
   },
 
   updateProjectByName(db: Knex, projectName: string, imgUrls: string[]) {
-    // console.log('##### -------- HERE ---------- ####')
-    // console.log(projectName)
+    console.log('##### -------- HERE ---------- ####')
+    console.log(projectName)
     return (
       db
         .from('projects')
@@ -82,7 +76,7 @@ const ImagesService = {
       const projectsList = await this.getListProjectFolders()
       // console.log(projectsList)
       console.log(db)
-      
+
       for (let i = 0; i < projectsList.length; i++) {
         // get project names from Cloudinary
         let projectName = projectsList[i].name
@@ -91,7 +85,7 @@ const ImagesService = {
         // check if project exists already in db
         // let DBproject: Project = await db('projects').where({name: projectName})
         let DBproject = await this.getProjectByName(db, projectName)
-          console.log('##### -------- HERE ---------- ####')
+        console.log('##### -------- HERE ---------- ####')
           // console.log(DBproject)
         // if project already exists update it
         if (DBproject.length > 0) {
