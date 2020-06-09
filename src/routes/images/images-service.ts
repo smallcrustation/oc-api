@@ -56,11 +56,13 @@ const ImagesService = {
   },
 
   insertProject(db: Knex, projectName: string, imgUrls: string[]) {
+    console.log('##### -------- insertProject ---------- ####')
+    console.log(projectName)
     return db('projects').insert({ name: projectName, 'img-urls': imgUrls })
   },
 
   updateProjectByName(db: Knex, projectName: string, imgUrls: string[]) {
-    console.log('##### -------- HERE ---------- ####')
+    console.log('##### -------- updateProjectByName ---------- ####')
     console.log(projectName)
     return (
       db
