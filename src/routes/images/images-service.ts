@@ -1,17 +1,22 @@
 import Knex from 'knex'
 import cloudTypes, { v2 as cloudinary } from 'cloudinary'
 
+type project = {
+  name: string
+  img_urls?: string[]
+  description?: string
+  address?: string
+  architect?: string
+}
+
 const ImagesService = {
   // DATABASE SERVICES
   getAllProjects(db: Knex) {
     return db.from('projects').select('*')
   },
 
-  getProjectByName(db: Knex, projectName: string){
-    return db
-          .from('projects')
-          .select('*')
-          .where({name: projectName})
+  getProjectByName(db: Knex, projectName: string) {
+    return db.from('projects').select('*').where({ name: projectName })
   },
 
   // CLOUDINARY SERVICES
@@ -46,47 +51,66 @@ const ImagesService = {
     }
   },
 
-  async getListProjectFolders(){
-    try{
+  async getListProjectFolders() {
+    try {
       let projectsFoldersList = await cloudinary.api.sub_folders('oc/projects')
       // console.log(projectsFoldersList.folders)
       return projectsFoldersList.folders
-      
-    } catch(e){
+    } catch (e) {
       return e
     }
   },
 
-  updateProjectByName(db: Knex, projectName: string, imgUrls: string[]){
-    console.log('##### -------- HERE ---------- ####')
-    console.log(projectName)
-    return db
-    .from('projects')
-    // .select('*')
-    .where({name: projectName})
-    .update({'img_urls': imgUrls})
+  insertProject(db: Knex, projectName: string, imgUrls: string[]) {
+    return db('projects').insert({ name: projectName, 'img-urls': imgUrls })
   },
 
-  async updateProjectsUrls(db: Knex){
-    try{
+  updateProjectByName(db: Knex, projectName: string, imgUrls: string[]) {
+    // console.log('##### -------- HERE ---------- ####')
+    // console.log(projectName)
+    return (
+      db
+        .from('projects')
+        // .select('*')
+        .where({ name: projectName })
+        .update({ img_urls: imgUrls })
+    )
+  },
+
+  async updateProjectsUrls(db: Knex) {
+    try {
       const projectsList = await this.getListProjectFolders()
       // console.log(projectsList)
       console.log(db)
-
-      for(let i=0; i<projectsList.length; i++){
-        // get project name
+      
+      for (let i = 0; i < projectsList.length; i++) {
+        // get project names from Cloudinary
         let projectName = projectsList[i].name
-        // console.log(projectName)
+        // get project images from Cloudinary
         let projectUrls = await this.getProjectImageUrls(projectName)
-        // console.log(projectUrls)
-         await this.updateProjectByName(db, projectName, projectUrls)
-        let updatedProject = await this.getProjectByName(db, projectName)
+        // check if project exists already in db
+        // let DBproject: Project = await db('projects').where({name: projectName})
+        let DBproject = await this.getProjectByName(db, projectName)
+          console.log('##### -------- HERE ---------- ####')
+          // console.log(DBproject)
+        // if project already exists update it
+        if (DBproject.length > 0) {
+          console.log('UPDATE')
+          await this.updateProjectByName(db, projectName, projectUrls)
+          // let updatedProject = await this.getProjectByName(db, projectName)
+        } else {
+          console.log('INSERT')
+          await this.insertProject(db, projectName, projectUrls)
+        }
+
+        //  await this.updateProjectByName(db, projectName, projectUrls)
+        // let updatedProject = await this.getProjectByName(db, projectName)
         // console.log(updatedProject)
       }
-    }catch(e){
-      return e 
+    } catch (e) {
+      return e
     }
-  }
+  },
 }
 
 export default ImagesService
