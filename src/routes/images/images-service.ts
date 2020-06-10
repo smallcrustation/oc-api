@@ -35,6 +35,8 @@ const ImagesService = {
         }
       }
 
+      console.log(imgUrls)
+
       return imgUrls
     } catch (e) {
       return e
