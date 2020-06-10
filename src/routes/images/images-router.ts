@@ -31,8 +31,7 @@ imagesRouter.route('/projects').get(async (req, res, next) => {
 // update our DB 'projects' urls
 imagesRouter.route('/set-project-urls').get(async (req, res, next) => {
   try {
-    // call on cloudinary api from images-service
-    // save project urls to our database
+    // save project urls to our database, from cloudinary data
     ImagesService.updateProjectsUrls(req.app.get('db'))
     res.status(200).json({ status: 'updated' }).end()
     return

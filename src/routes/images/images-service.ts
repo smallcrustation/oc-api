@@ -35,11 +35,6 @@ const ImagesService = {
         }
       }
 
-      // cloudinaryData.resources.forEach((img: cloudTypes.MetadataFieldApiResponse) => {
-      //   console.log('here')
-      //   imgUrls.push(img.url)
-      // })
-
       return imgUrls
     } catch (e) {
       return e
@@ -55,53 +50,62 @@ const ImagesService = {
     }
   },
 
-  insertProject(db: Knex, projectName: string, imgUrls: string[]) {
-    console.log('##### -------- insertProject ---------- ####')
-    console.log(projectName)
-    return db.into('projects').insert({ name: projectName, 'img-urls': imgUrls })
-  },
-
-  updateProjectByName(db: Knex, projectName: string, imgUrls: string[]) {
-    console.log('##### -------- updateProjectByName ---------- ####')
-    console.log(projectName)
+  updateProjectByName(db: Knex, project: project) {
     return (
       db
         .from('projects')
         // .select('*')
-        .where({ name: projectName })
-        .update({ img_urls: imgUrls })
+        .where({ name: project.name })
+        .update({ img_urls: project.img_urls })
     )
   },
 
+  insertProject(db: Knex, project: project) {
+    return db
+        .into('projects')
+        .insert(project)
+        .returning('*')
+        .then(rows => {
+          return rows[0];
+        });
+  },
+
+  // postProject(db: Knex, project: project) {
+  //   console.log('POST EVENT')
+  //   return db
+  //     .into('projects')
+  //     .insert(project)
+  //     .returning('*')
+  //     .then(rows => {
+  //       return rows[0];
+  //     });
+  // },
+
   async updateProjectsUrls(db: Knex) {
     try {
+      // get project names from Cloudinary
+
       const projectsList = await this.getListProjectFolders()
       // console.log(projectsList)
-      console.log(db)
+
 
       for (let i = 0; i < projectsList.length; i++) {
-        // get project names from Cloudinary
         let projectName = projectsList[i].name
-        // get project images from Cloudinary
+        // get project URLS from Cloudinary
         let projectUrls = await this.getProjectImageUrls(projectName)
+
+        let tempProject: project = await {name: projectName, img_urls: projectUrls}
+
         // check if project exists already in db
-        // let DBproject: Project = await db('projects').where({name: projectName})
         let DBproject = await this.getProjectByName(db, projectName)
-        console.log('##### -------- HERE ---------- ####')
-          // console.log(DBproject)
         // if project already exists update it
         if (DBproject.length > 0) {
-          console.log('UPDATE')
-          await this.updateProjectByName(db, projectName, projectUrls)
+          await this.updateProjectByName(db, tempProject)
           // let updatedProject = await this.getProjectByName(db, projectName)
         } else {
-          console.log('INSERT')
-          await this.insertProject(db, projectName, projectUrls)
+          await this.insertProject(db, tempProject)
+          let newProject = await this.getProjectByName(db, projectName)
         }
-
-        //  await this.updateProjectByName(db, projectName, projectUrls)
-        // let updatedProject = await this.getProjectByName(db, projectName)
-        // console.log(updatedProject)
       }
     } catch (e) {
       return e

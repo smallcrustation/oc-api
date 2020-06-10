@@ -5,9 +5,11 @@ const cloudinary = require('cloudinary').v2
 
 // CONNECT WITH DATABASE & SET IT AS AN EXPRESS VAR
 
+// console.log(DATABASE_URL)
 const db = knex({
   client: 'pg',
-  connection: DATABASE_URL
+  connection: DATABASE_URL,
+  // debug: true
 })
 
 app.set('db', db)
