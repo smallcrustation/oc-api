@@ -31,7 +31,7 @@ const ImagesService = {
 
       for (let i = 0; i < cloudinaryData.resources.length; i++) {
         if (cloudinaryData.resources[i].url) {
-          imgUrls.push(cloudinaryData.resources[i].url)
+          imgUrls.push(cloudinaryData.resources[i].secure_url)
         }
       }
 
