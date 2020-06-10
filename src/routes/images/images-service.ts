@@ -86,8 +86,7 @@ const ImagesService = {
       // get project names from Cloudinary
 
       const projectsList = await this.getListProjectFolders()
-      // console.log(projectsList)
-
+      console.log(projectsList)
 
       for (let i = 0; i < projectsList.length; i++) {
         let projectName = projectsList[i].name
