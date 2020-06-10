@@ -1,6 +1,5 @@
 import express from 'express'
 import ImagesService from './images-service'
-// const cloudinary = require('cloudinary').v2
 
 const imagesRouter = express.Router()
 const jsonBodyParser = express.json()
