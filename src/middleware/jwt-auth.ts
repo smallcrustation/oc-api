@@ -1,12 +1,17 @@
 import { JsonWebTokenError } from 'jsonwebtoken'
-import { NextFunction } from 'express'
+import express from 'express'
 import AuthService from '../routes/auth/auth-service'
+import { JWT_EXPIRY } from '../config';
 
-async function requireAuth(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+interface PayloadInterface extends json{
+  sub: string
+}
+
+const requireAuth = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const authToken = req.get('Authorization') || '';
 	let token;
 
@@ -17,7 +22,8 @@ async function requireAuth(
 	token = authToken.slice('bearer '.length, authToken.length);
 
 	try {
-		const payload = await AuthService.verifyJwt(token);
+    const payload: PayloadInterface | string = await AuthService.verifyJwt(token);
+    if(payload.sub){
 		const user = await AuthService.findByUsername(
 			req.app.get('db'),
 			payload.sub,
@@ -28,7 +34,8 @@ async function requireAuth(
 		}
 
 		req.user = user;
-		next();
+    next();
+  }
 	} catch (err) {
 		const msg =
 			err.message === 'jwt expired'
@@ -36,7 +43,6 @@ async function requireAuth(
 				: 'Unauthorized request';
 		res.status(401).json({ error: msg });
 	}
-};
 }
 
 export default requireAuth
