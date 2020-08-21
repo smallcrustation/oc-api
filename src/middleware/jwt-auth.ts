@@ -3,12 +3,12 @@ import express from 'express'
 import AuthService from '../routes/auth/auth-service'
 import { JWT_EXPIRY } from '../config';
 
-interface PayloadInterface extends json{
-  sub: string
+interface UserReq extends express.Request{
+	user: any
 }
 
 const requireAuth = async (
-  req: express.Request,
+  req: UserReq,
   res: express.Response,
   next: express.NextFunction
 ) => {
@@ -22,7 +22,7 @@ const requireAuth = async (
 	token = authToken.slice('bearer '.length, authToken.length);
 
 	try {
-    const payload: PayloadInterface | string = await AuthService.verifyJwt(token);
+    const payload: any = await AuthService.verifyJwt(token);
     if(payload.sub){
 		const user = await AuthService.findByUsername(
 			req.app.get('db'),

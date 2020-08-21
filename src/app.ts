@@ -2,7 +2,8 @@ import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import {NODE_ENV} from './config'
-
+import authRouter from './routes/auth/auth-router'
+import usersRouter from './routes/users/users-router'
 import imagesRouter from './routes/images/images-router'
 
 const app = express() 
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/images', imagesRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/users', usersRouter)
 
 // ERROR HANDLING
 app.use((error: Error, req: Request , res: Response , next: NextFunction)=> {

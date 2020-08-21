@@ -5,9 +5,9 @@ import {JWT_SECRET, JWT_EXPIRY} from '../../config'
 
 const AuthService = {
 
-	findByUsername(db: Knex, user_name: string) {
-		return db('users')
-			.where({ user_name })
+	findByUsername(db: Knex, username: string) {
+		return db('oc_users')
+			.where({ username })
 			.first('*');
 	},
 

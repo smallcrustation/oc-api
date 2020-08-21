@@ -59,3 +59,7 @@ VALUES
     null
   );
 COMMIT;
+
+INSERT INTO oc_users(username, fullname, email, password)
+VALUES
+('lars', 'Lars Olrick', 'lars@gmail.com', '$2b$10$wsUCq/GnY9NyZQNI.vQeGu3bMaZ.emofjsLRbXwj9SMJZLs6NhZwa');

@@ -6,10 +6,10 @@ const authRouter = express.Router()
 const jsonBodyParser = express.json()
 
 authRouter
-  .route('/token')
+  .route('/login')
   .post(jsonBodyParser, async (req, res, next) => {
-    const {user_name, password} = req.body;
-    const loginUser = {user_name, password};
+    const {username, password} = req.body;
+    const loginUser = {username, password};
     
     for (const [key, value] of Object.entries(loginUser)) {
       if (!value) {
@@ -20,10 +20,10 @@ authRouter
     }
 
     try {
-      const user = await AuthService.findByUsername(req.app.get('db'), loginUser.user_name);
+      const user = await AuthService.findByUsername(req.app.get('db'), loginUser.username);
       if (!user) {
         return res.status(400).json({
-          error: 'Incorrect user_name or password',
+          error: 'Incorrect username or password',
         });
       }
 
@@ -31,18 +31,22 @@ authRouter
 
       if (!passwordsMatch) {
         return res.status(400).json({
-          error: 'Incorrect user_name or password',
+          error: 'Incorrect username or password',
         });
       }
 
-      const sub = user.user_name;
-      const payload = { user_id: user.id };
+      const sub = user.username;
+      const payload: any = { user_id: user.id };
       res.send({
         authToken: AuthService.createJwt(sub, payload),
       });
+
+      console.log('LOGGED IN BABY')
     } catch(err) {
       next(err);
     }
     
   })
+
+  export default authRouter
   
