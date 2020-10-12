@@ -9,7 +9,8 @@ interface Result {
 
 export interface NewUser {
   username: string
-  fullName: string
+  firstName: string
+  lastName: string
   email: string
   password: string
 }
@@ -71,11 +72,13 @@ const UsersService = {
     return bcrypt.hash(password, 10)
   },
 
+  // sanitizes user and adds NewUser
   sanitizeUser(newUser: NewUser) {
 
     const cleanNewUser= {
       username: xss(newUser.username),
-      full_name: xss(newUser.fullName),
+      first_name: xss(newUser.firstName),
+      last_name: xss(newUser.lastName),
       email: xss(newUser.email),
       password: xss(newUser.password), // what if pass looks like html...
     }

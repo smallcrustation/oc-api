@@ -60,6 +60,6 @@ VALUES
   );
 COMMIT;
 
-INSERT INTO oc_users(username, fullname, email, password)
+INSERT INTO oc_users(username, first_name, last_name, email, password)
 VALUES
-('lars', 'Lars Olrick', 'lars@gmail.com', '$2b$10$wsUCq/GnY9NyZQNI.vQeGu3bMaZ.emofjsLRbXwj9SMJZLs6NhZwa');
+('lars', 'Lars', 'Olrich', 'lars@gmail.com', '$2b$10$wsUCq/GnY9NyZQNI.vQeGu3bMaZ.emofjsLRbXwj9SMJZLs6NhZwa');

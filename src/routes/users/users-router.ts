@@ -11,8 +11,8 @@ interface Result {
 usersRouter.route('/')
   .post(jsonBodyParser, async (req, res, next) => {
   // get username, email, password. validate. hashPass. clean. insert. return.
-  const { username, fullName, email, password } = req.body
-  const newUser: NewUser = { username, fullName, email, password }
+  const { username, firstName, lastName, email, password } = req.body
+  const newUser: NewUser = { username, firstName, lastName, email, password }
 
   try {
     // validate
