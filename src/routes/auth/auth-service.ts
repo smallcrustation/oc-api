@@ -16,6 +16,7 @@ const AuthService = {
 	},
 
 	createJwt(subject: string, payload: string) {
+
 		return jwt.sign(payload, JWT_SECRET, {
 			subject,
 			expiresIn: JWT_EXPIRY,

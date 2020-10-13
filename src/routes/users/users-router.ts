@@ -40,7 +40,7 @@ usersRouter.route('/')
     next(err)
   }
 }).get((req, res, next) => {
-  console.log('/api/users')
+  // console.log('/api/users')
 })
 
 export default usersRouter
