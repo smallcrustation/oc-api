@@ -88,7 +88,7 @@ const ImagesService = {
 
       // console.log(db)
       const projectsList = await this.getListProjectFolders()
-      // console.log(projectsList)
+      console.log(projectsList.length)
       for (let i = 0; i < projectsList.length; i++) {
         console.log(projectsList)
         
@@ -96,10 +96,10 @@ const ImagesService = {
         console.log(i, ' THIS IS A PROJECT NAME --:', projectName)
         // get project URLS from Cloudinary
         let projectUrls = await this.getProjectImageUrls(projectName)
-        console.log(i, ' THIS IS A PROJECT URLS --:', projectName)
+        console.log(i, ' THIS IS A PROJECT URLS --:', projectUrls)
 
         let tempProject: project = await {name: projectName, img_urls: projectUrls}
-        console.log(i, ' THIS IS TEMP PROJECT --:', projectName)
+        console.log(i, ' THIS IS TEMP PROJECT --:', tempProject)
 
         // check if project exists already in db
         let DBproject = await this.getProjectByName(db, projectName)
