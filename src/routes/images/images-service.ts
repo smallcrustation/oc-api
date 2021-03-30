@@ -44,6 +44,7 @@ const ImagesService = {
   async getListProjectFolders() {
     try {
       let projectsFoldersList = await cloudinary.api.sub_folders('oc/projects')
+      console.log('GET LIST PROJECT FOLDERS')
       return projectsFoldersList.folders
     } catch (e) {
       return e
@@ -91,7 +92,7 @@ const ImagesService = {
       for (let i = 0; i < projectsList.length; i++) {
         
         let projectName = projectsList[i].name
-
+        console.log(projectName)
         // get project URLS from Cloudinary
         let projectUrls = await this.getProjectImageUrls(projectName)
 
