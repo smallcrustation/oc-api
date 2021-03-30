@@ -88,8 +88,9 @@ const ImagesService = {
 
       // console.log(db)
       const projectsList = await this.getListProjectFolders()
-      console.log(projectsList)
+      // console.log(projectsList)
       for (let i = 0; i < projectsList.length; i++) {
+        console.log(projectsList)
         
         let projectName = projectsList[i].name
         console.log(i, ' THIS IS A PROJECT NAME --:', projectName)
