@@ -85,6 +85,7 @@ const ImagesService = {
     try {
       // get project names from Cloudinary
 
+      console.log(db)
       const projectsList = await this.getListProjectFolders()
 
       for (let i = 0; i < projectsList.length; i++) {
