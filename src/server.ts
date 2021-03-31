@@ -8,8 +8,10 @@ const cloudinary = require('cloudinary').v2
 // console.log(DATABASE_URL)
 const db = knex({
   client: 'pg',
-  connection: DATABASE_URL,
-  // debug: true
+  connection: {
+    connectionString: DATABASE_URL,
+    ssl: true
+  }
 })
 
 app.set('db', db)
