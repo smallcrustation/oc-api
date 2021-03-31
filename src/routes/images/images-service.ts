@@ -16,6 +16,7 @@ const ImagesService = {
   },
 
   getProjectByName(db: Knex, projectName: string) {
+    console.log('GET PROJECT BY NAME')
     return db.from('projects').select('*').where({ name: projectName })
   },
 
