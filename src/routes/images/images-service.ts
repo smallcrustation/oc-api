@@ -15,9 +15,10 @@ const ImagesService = {
     return db.from('projects').select('*')
   },
 
+// ------------------------ PROBLEM --------------------------------------
   getProjectByName(db: Knex, projectName: string) {
     console.log('GET PROJECT BY NAME')
-    return db.from('projects').select('*').where({ name: projectName })
+    return db.from('projects').select('*').where({ name: projectName }).returning('*').then(console.log)
   },
 
   // CLOUDINARY SERVICES
@@ -102,6 +103,7 @@ const ImagesService = {
         let tempProject: project = await {name: projectName, img_urls: projectUrls}
         console.log(i, ' THIS IS TEMP PROJECT --:', tempProject)
 
+        // ------------------------ PROBLEM --------------------------------------
         // check if project exists already in db
         let DBproject = await this.getProjectByName(db, projectName)
 
