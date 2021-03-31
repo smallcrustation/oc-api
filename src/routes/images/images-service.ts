@@ -18,7 +18,8 @@ const ImagesService = {
 // ------------------------ PROBLEM --------------------------------------
   getProjectByName(db: Knex, projectName: string) {
     console.log('GET PROJECT BY NAME')
-    return db.from('projects').select('*').where({ name: projectName }).returning('*').then(console.log)
+    db.from('projects').select('*').where({ name: projectName }).returning('*').then(console.log)
+    return db.from('projects').select('*').where({ name: projectName })
   },
 
   // CLOUDINARY SERVICES
