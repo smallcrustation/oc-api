@@ -11,8 +11,7 @@ const db = knex({
   connection: {
     connectionString: DATABASE_URL,
     ssl: true
-  },
-  debug: true,
+  }
 })
 
 app.set('db', db)

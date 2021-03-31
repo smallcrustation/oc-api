@@ -15,10 +15,9 @@ const ImagesService = {
     return db.from('projects').select('*')
   },
 
-// ------------------------ PROBLEM --------------------------------------
   getProjectByName(db: Knex, projectName: string) {
-    console.log('GET PROJECT BY NAME')
-    db.from('projects').select('*').where({ name: projectName }).returning('*').then(console.log)
+    // console.log('GET PROJECT BY NAME')
+    // db.from('projects').select('*').where({ name: projectName }).returning('*').then(console.log)
     return db.from('projects').select('*').where({ name: projectName })
   },
 
@@ -47,7 +46,7 @@ const ImagesService = {
   async getListProjectFolders() {
     try {
       let projectsFoldersList = await cloudinary.api.sub_folders('oc/projects')
-      console.log('GET LIST PROJECT FOLDERS')
+      // console.log('GET LIST PROJECT FOLDERS')
       return projectsFoldersList.folders
     } catch (e) {
       return e
@@ -91,7 +90,7 @@ const ImagesService = {
 
       // console.log(db)
       const projectsList = await this.getListProjectFolders()
-      // console.log(projectsList.length)
+
       for (let i = 0; i < projectsList.length; i++) {
         // console.log(projectsList)
         
@@ -102,21 +101,19 @@ const ImagesService = {
         // console.log(i, ' THIS IS A PROJECT URLS --:', projectUrls)
 
         let tempProject: project = await {name: projectName, img_urls: projectUrls}
-        console.log(i, ' THIS IS TEMP PROJECT --:', tempProject)
+        // console.log(i, ' THIS IS TEMP PROJECT --:', tempProject)
 
-        // ------------------------ PROBLEM --------------------------------------
         // check if project exists already in db
         let DBproject = await this.getProjectByName(db, projectName)
 
-        // ------------------------- NOT GETTING HERE ----------------------------
         // if project already exists update it
-        console.log('DB PROJECT LENGTH: ', DBproject.length)
+        // console.log('DB PROJECT LENGTH: ', DBproject.length)
         if (DBproject.length > 0) {
-          console.log('UPDATE PROJECT BY NAME')
+          // console.log('UPDATE PROJECT BY NAME')
           await this.updateProjectByName(db, tempProject)
           // let updatedProject = await this.getProjectByName(db, projectName)
         } else {
-          console.log('INSERT PROJECT')
+          // console.log('INSERT PROJECT')
           await this.insertProject(db, tempProject)
           let newProject = await this.getProjectByName(db, projectName)
         }
