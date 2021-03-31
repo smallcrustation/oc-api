@@ -106,6 +106,7 @@ const ImagesService = {
 
         // ------------------------- NOT GETTING HERE ----------------------------
         // if project already exists update it
+        console.log(DBproject.length)
         if (DBproject.length > 0) {
           console.log('UPDATE PROJECT BY NAME')
           await this.updateProjectByName(db, tempProject)
