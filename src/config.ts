@@ -3,7 +3,7 @@ const config = {
   PORT: process.env.PORT || 8000,
   NODE_ENV: process.env.NODE_ENV || 'development',
   DATABASE_URL:
-    process.env.DATABASE_URL || 'postgresql://krill@localhost/oc',
+    process.env.DB_URL || 'postgresql://krill@localhost/oc',
   // TEST_DATABASE_URL:
   //   process.env.TEST_DATABASE_URL ||
   //   'postgresql://whatdo@localhost/whatdo_test',
