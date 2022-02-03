@@ -84,7 +84,6 @@ const ImagesService = {
   async updateProjectsUrls(db: Knex) {
     try {
       // get project names from Cloudinary
-
       const projectsList = await this.getListProjectFolders()
 
       for (let i = 0; i < projectsList.length; i++) {

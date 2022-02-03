@@ -1,18 +1,31 @@
 import app from './app'
-import {PORT, DATABASE_URL} from './config'
+import {PORT, HOST, DBPORT, DATABASE, USER, PASSWORD, DATABASE_URL} from './config'
 import knex from 'knex'
 const cloudinary = require('cloudinary').v2
 
 // CONNECT WITH DATABASE & SET IT AS AN EXPRESS VAR
-
-// console.log(DATABASE_URL)
 const db = knex({
   client: 'pg',
   connection: {
-    connectionString: DATABASE_URL,
+    // connectionString: DATABASE_URL,
+    host: HOST,
+    port: DBPORT,
+    database: DATABASE,
+    user: USER,
+    password: PASSWORD,
+    debug: true,
     ssl: true
   }
 })
+
+// ------ TESTS IF CONNECTED TO DATABASE ------
+// db.raw("SELECT 1").then(() => {
+//   console.log("PostgreSQL connected");
+// })
+// .catch((e) => {
+//   console.log("PostgreSQL not connected");
+//   console.error(e);
+// });
 
 app.set('db', db)
 
