@@ -1,5 +1,5 @@
 import app from './app'
-import {PORT, HOST, DBPORT, DATABASE, USER, PASSWORD, DATABASE_URL} from './config'
+import {PORT, HOST, DBPORT, DATABASE, USER, PASSWORD} from './config'
 import knex from 'knex'
 const cloudinary = require('cloudinary').v2
 
@@ -7,7 +7,6 @@ const cloudinary = require('cloudinary').v2
 const db = knex({
   client: 'pg',
   connection: {
-    // connectionString: DATABASE_URL,
     host: HOST,
     port: DBPORT,
     database: DATABASE,
@@ -32,7 +31,6 @@ app.set('db', db)
 // CONNECT TO CLOUDINARY
 
 require('dotenv').config();
-// console.log('in route config')
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
