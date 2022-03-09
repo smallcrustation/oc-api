@@ -18,11 +18,11 @@ const config = {
   CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
   PORT: process.env.PORT || 8000,
   NODE_ENV: process.env.NODE_ENV || 'development',
-  HOST: process.env.dev_MIGRATION_DB_HOST,
-  DBPORT: Number(process.env.dev_MIGRATION_DB_PORT),
-  DATABASE: process.env.dev_MIGRATION_DB_NAME,
-  USER: process.env.dev_MIGRATION_DB_USER,
-  PASSWORD: process.env.dev_MIGRATION_DB_PASS,
+  HOST: process.env.dev_DB_HOST,
+  DBPORT: Number(process.env.dev_DB_PORT),
+  DATABASE: process.env.dev_DB_NAME,
+  USER: process.env.dev_DB_USER,
+  PASSWORD: process.env.dev_DB_PASS,
  
   DATABASE_URL:
    process.env.DB_URL || 'postgresql://krill@localhost/oc',
