@@ -6,7 +6,7 @@ require('dotenv').config() // don't forget you dont get you .env data without th
 
 const config = {
   NODE_ENV: process.env.NODE_ENV || 'development',
-  PORT: process.env.PORT || 8000,
+  PORT: process.env.dev_PORT || 8000,
   HOST: process.env.dev_DB_HOST,
   DBPORT: Number(process.env.dev_DB_PORT),
   DATABASE: process.env.dev_DB_NAME,
@@ -15,6 +15,8 @@ const config = {
 
   DATABASE_URL:
    process.env.DB_URL || 'postgresql://krill@localhost/oc',
+
+   JWT_SECRET: process.env.JWT_SECRET || 'secret'
 
   // TEST_DATABASE_URL:
   //   process.env.TEST_DATABASE_URL ||
