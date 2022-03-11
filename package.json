@@ -16,7 +16,7 @@
     "dev": "npm run build:dev & npm run start:dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "postgrator --config src/postgrator-config.ts",
-    "migrate:dev": "postgrator --config src/postgrator-config.ts printenv",
+    "migrate:dev": "postgrator --config src/postgrator-config.ts",
     "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate",
     "seed": "psql krill -d oc -f ./seeds/seed.tables.sql"
   },
@@ -36,7 +36,8 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.13",
     "pg": "^7.18.2",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "xss": "^1.0.11"
   },
   "devDependencies": {
     "@types/express": "^4.17.3",

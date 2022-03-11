@@ -11,10 +11,10 @@ type user = {
 const authService = {
   getUserWithUserName(db: Knex, username: string) {
     // console.log('USERNAME: ', username)
-    // return db('projector_users')
+    // return db('oc_users')
     //   .where({ username })
     //   .first('*')
-    return db('projector_users')
+    return db('oc_users')
       .whereRaw(`LOWER(username) LIKE LOWER('${username}')`)
       .first('*')
   },
@@ -25,7 +25,7 @@ const authService = {
     return bcrypt.compare(LoginUserPass, dbUserPass)
   },
 
-  createJwt(subject: string, payload: string) {
+  createJwt(subject: string, payload: any) {
     return jwt.sign(payload, JWT_SECRET, {
       subject,
       algorithm: 'HS256'

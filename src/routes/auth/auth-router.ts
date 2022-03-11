@@ -1,10 +1,10 @@
 import express from 'express'
 import AuthService from './auth-service'
 
-const imagesRouter = express.Router()
+const authRouter = express.Router()
 const jsonBodyParser = express.json()
 
-imagesRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
+authRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
   try {
     const {username, password} = req.body
     const loginUser = {username, password}
@@ -22,8 +22,24 @@ imagesRouter.route('/login').post(jsonBodyParser, async (req, res, next) => {
         })
       }
 
+      const passwordsMatch = await AuthService.comparePasswords(loginUser.password, user.password)
+      if(!passwordsMatch){
+        // console.log(passwordsMatch)
+        return res.status(400).json({
+          error: 'Incorrect username or password'
+        })
+      }
+
+      const subject = user.username
+      const payload = {user_id: user.id}
+      res.send({
+        authToken: AuthService.createJwt(subject, payload)
+      })
+
 
   } catch (e) {
     next(e)
   }
 })
+
+export default authRouter
