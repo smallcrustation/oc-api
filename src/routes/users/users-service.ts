@@ -37,7 +37,7 @@ const UsersService = {
     }
 
     //check if username already exists in db
-    const userFound = await db('projector_users')
+    const userFound = await db('oc_users')
       .where('username', newUser.username)
       .select('*')
     if (userFound.length) {
@@ -65,7 +65,7 @@ const UsersService = {
   },
 
   insertUser(db: Knex, newUser: NewUser){
-    return db('projector_users')
+    return db('oc_users')
       .insert(newUser)
       .returning('*')
   }

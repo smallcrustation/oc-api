@@ -5,6 +5,7 @@ import {NODE_ENV} from './config'
 
 import imagesRouter from './routes/images/images-router'
 import authRouter from './routes/auth/auth-router'
+import usersRouter from './routes/users/users-router'
 
 const app = express() 
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/images', imagesRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/users', usersRouter)
 
 // ERROR HANDLING
 app.use((error: Error, req: Request , res: Response , next: NextFunction)=> {
