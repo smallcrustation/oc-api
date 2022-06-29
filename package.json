@@ -18,7 +18,8 @@
     "migrate": "postgrator --config src/postgrator-config.ts",
     "migrate:dev": "postgrator --config src/postgrator-config.ts",
     "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate",
-    "seed": "psql krill -d oc -f ./seeds/seed.tables.sql"
+    "seed": "psql krill -d oc -f ./seeds/seed.tables.sql",
+    "check-env": "node -e 'console.log(process.env)' | grep npm"
   },
   "author": "",
   "license": "ISC",

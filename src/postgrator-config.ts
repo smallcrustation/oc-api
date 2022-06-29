@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'development') {
     database: process.env.dev_DB_NAME,
     username: process.env.dev_DB_USER,
     password: process.env.dev_DB_PASS,
-    ssl: true,
+    // ssl: true, NO SSL FOR LOCAL ENVIRONMENT
   }
 }
 

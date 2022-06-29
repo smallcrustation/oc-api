@@ -7,7 +7,15 @@ type project = {
   description?: string
   address?: string
   architect?: string
+  pretty_name?: string
+  bedrooms?: string
+  bathrooms?: string 
+  square_footage?: string
+  data_1?: string
+  data_2?: string
+  data_3?: string
 }
+
 
 const ImagesService = {
   // DATABASE SERVICES
@@ -15,6 +23,7 @@ const ImagesService = {
     return db.from('projects').select('*')
   },
 
+  // If Renamed on cloudinary will it add a project?
   getProjectByName(db: Knex, projectName: string) {
     return db.from('projects').select('*').where({ name: projectName })
   },
@@ -50,6 +59,7 @@ const ImagesService = {
     }
   },
 
+  // UPDATE IMAGE URLS ONLY
   updateProjectByName(db: Knex, project: project) {
     return (
       db
@@ -57,6 +67,25 @@ const ImagesService = {
         // .select('*')
         .where({ name: project.name })
         .update({ img_urls: project.img_urls })
+    )
+  },
+
+  updateProjectInfoByName(db: Knex, project: project) {
+    return (
+      db
+        .from('projects')
+        .where({ name: project.name })
+        .update({ description: project.description,
+          address: project.address,
+          architect: project.architect,
+          pretty_name: project.pretty_name,
+          bedrooms: project.bedrooms,
+          bathrooms: project.bathrooms,
+          square_footage: project.square_footage,
+          data_1: project.data_1,
+          data_2: project.data_2,
+          data_3: project.data_3
+        })
     )
   },
 
@@ -81,6 +110,9 @@ const ImagesService = {
   //     });
   // },
 
+
+  // ==== CHECKS CLOUDINARY FOR NEW UPLOADED PICTURES & INSERTS/UPDATES OUR DATABASE ===
+  // 
   async updateProjectsUrls(db: Knex) {
     try {
       // get project names from Cloudinary
@@ -101,6 +133,7 @@ const ImagesService = {
           await this.updateProjectByName(db, tempProject)
           // let updatedProject = await this.getProjectByName(db, projectName)
         } else {
+          // project does not exist make a new one
           await this.insertProject(db, tempProject)
           let newProject = await this.getProjectByName(db, projectName)
         }
