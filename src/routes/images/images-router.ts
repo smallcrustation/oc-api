@@ -41,49 +41,72 @@ imagesRouter.route('/update-project-urls').get(async (req, res, next) => {
   }
 })
 
-imagesRouter.route('/update-project-info').post(async (req, res, next) => {
-  try {
-    const {
-      name,
-      description,
-      address,
-      architect,
-      pretty_name,
-      bedrooms,
-      bathrooms,
-      square_footage,
-      data_1,
-      data_2,
-      data_3,
-    } = req.body
+imagesRouter
+  .route('/update-project-info')
+  .post(jsonBodyParser, async (req, res, next) => {
+    // console.log(req.body)
 
-    const projectInfo = {
-      name,
-      description,
-      address,
-      architect,
-      pretty_name,
-      bedrooms,
-      bathrooms,
-      square_footage,
-      data_1,
-      data_2,
-      data_3
+    try {
+      const {
+        name,
+        description,
+        address,
+        architect,
+        prettyName,
+        bedrooms,
+        bathrooms,
+        squareFootage,
+        data1,
+        data2,
+        data3,
+      } = req.body
+
+      const projectReq = {
+        name,
+        description,
+        address,
+        architect,
+        prettyName,
+        bedrooms,
+        bathrooms,
+        squareFootage,
+        data1,
+        data2,
+        data3,
+      }
+
+      // console.log(projectReq)
+      // Change keys to match DB Columns, Prevents 'name' from being updated in DB from Client
+      const projectCorrectKeys = {
+        address: projectReq.address,
+        architect: projectReq.architect,
+        pretty_name: projectReq.prettyName,
+        bedrooms: projectReq.bedrooms,
+        bathrooms: projectReq.bathrooms,
+        square_footage: projectReq.squareFootage,
+        data_1: projectReq.data1,
+        data_2: projectReq.data2,
+        data_3: projectReq.data3
+      }
+
+      // GET THE PROJECT, to pass to service
+      const getProject = await ImagesService.getProjectByName(req.app.get('db'), projectReq.name)
+
+      //deconstruct/clean getProject into a clean object
+      var DbProject = {...getProject['0']}
+
+      // COMBINE PROJECT INFO
+      const mergedProject = {...DbProject, ...projectCorrectKeys}
+      // console.log('mergedProject: ', mergedProject)
+
+      // save project urls to our database, from our input data ImageListItemProject
+      await ImagesService.updateProjectInfoByName(req.app.get('db'), mergedProject)
+      res.status(200).json({ status: 'updated' }).end()
+      return
+    } catch (e) {
+      next(e)
     }
-
-    // GET THE PROJECT, to pass to service
-    const project = ImagesService.getProjectByName(req.app.get('db'), projectInfo.name)
-
-    // COMBINE PROJECT INFO/UPDATE ETC...
-
-    // save project urls to our database, from cloudinary data
-    ImagesService.updateProjectInfoByName(req.app.get('db'), project) 
-    res.status(200).json({ status: 'updated' }).end()
-    return
-  } catch (e) {
-    next(e)
-  }
-})
+  })
 
 // #### ------------------- MAKE OBSOLETE ------------------- ####
 

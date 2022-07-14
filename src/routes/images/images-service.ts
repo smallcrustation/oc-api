@@ -71,6 +71,7 @@ const ImagesService = {
   },
 
   updateProjectInfoByName(db: Knex, project: project) {
+    // console.log("updateProjectInfoByName", project)
     return (
       db
         .from('projects')
