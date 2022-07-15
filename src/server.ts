@@ -17,6 +17,10 @@ const db = knex({
   }
 })
 
+console.log(HOST)
+console.log(DATABASE)
+console.log(USER)
+
 // ------ TESTS IF CONNECTED TO DATABASE ------
 // db.raw("SELECT 1").then(() => {
 //   console.log("PostgreSQL connected");
