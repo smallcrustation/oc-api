@@ -7,11 +7,11 @@ require('dotenv').config() // don't forget you dont get you .env data without th
 const config = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: process.env.PORT || 8000,
-  HOST: process.env.DB_HOST,
-  DBPORT: Number(process.env.DB_PORT),
-  DATABASE: process.env.DB_NAME,
-  USER: process.env.DB_USER,
-  PASSWORD: process.env.DB_PASS,
+  HOST: process.env.HOST,
+  DBPORT: Number(process.env.PORT),
+  DATABASE: process.env.DBNAME,
+  USER: process.env.DBUSER,
+  PASSWORD: process.env.PASSWORD,
 
   DATABASE_URL:
    process.env.DB_URL || 'postgresql://krill@localhost/oc',
