@@ -14,7 +14,7 @@ const config = {
   PASSWORD: process.env.DB_PASS,
 
   DATABASE_URL:
-   process.env.DB_URL || 'postgresql://krill@localhost/oc',
+   process.env.DATABASE_URL || 'postgresql://krill@localhost/oc',
 
    JWT_SECRET: process.env.JWT_SECRET || 'secret',
 

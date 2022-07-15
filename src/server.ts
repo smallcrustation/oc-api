@@ -20,6 +20,8 @@ const db = knex({
   // }
 })
 
+console.log(DATABASE_URL + '?ssl-true')
+
 // ------ TESTS IF CONNECTED TO DATABASE ------
 // db.raw("SELECT 1").then(() => {
 //   console.log("PostgreSQL connected");
