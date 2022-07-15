@@ -8,7 +8,7 @@ const db = knex({
   client: 'pg',
   connection:{
     connectionString: DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false } // SSL issues w pg8+ https://stackoverflow.com/questions/61785729/knex-heroku-error-self-signed-certificate
   }
   
   // for dev
@@ -23,7 +23,6 @@ const db = knex({
   // }
 })
 
-console.log(DATABASE_URL + '?ssl=true')
 
 // ------ TESTS IF CONNECTED TO DATABASE ------
 // db.raw("SELECT 1").then(() => {

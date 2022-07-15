@@ -22,13 +22,13 @@ imagesRouter.route('/project-folders').get(async (req, res, next) => {
 // fetch projects from db
 imagesRouter.route('/projects').get(async (req, res, next) => {
   try {
-    console.log('======BEFORE getAllProjects=====')
+    // console.log('======BEFORE getAllProjects=====')
     // console.log(req.app.get('db'))
     let projectsList = await ImagesService.getAllProjects(req.app.get('db'))
-    console.log('======projectsList=====',projectsList)
+    // console.log('======projectsList=====',projectsList)
     res.status(200).json({ projectsList }).end()
   } catch (e) {
-    console.log(e)
+    // console.log(e)
     next(e)
   }
 })
