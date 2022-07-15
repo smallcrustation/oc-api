@@ -6,7 +6,7 @@ const cloudinary = require('cloudinary').v2
 // CONNECT WITH DATABASE & SET IT AS AN EXPRESS VAR
 const db = knex({
   client: 'pg',
-  connection: DATABASE_URL
+  connection: DATABASE_URL + '?ssl=true'
   
   // for dev
   // {
@@ -20,7 +20,7 @@ const db = knex({
   // }
 })
 
-console.log(DATABASE_URL)
+console.log(DATABASE_URL + '?ssl=true')
 
 // ------ TESTS IF CONNECTED TO DATABASE ------
 // db.raw("SELECT 1").then(() => {
