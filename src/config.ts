@@ -3,15 +3,15 @@ require('dotenv').config() // don't forget you dont get you .env data without th
 // All this is set do 'dev' should make conditional or just assume the
 // .env being used is going to supply appropriate information.
 
-console.log('==========================',process.env)
+
 const config = {
   NODE_ENV: process.env.NODE_ENV || 'development',
-  PORT: process.env.port || 8000,
-  HOST: process.env.host,
-  DBPORT: Number(process.env.PORT),
-  DATABASE: process.env.dbname,
-  USER: process.env.user,
-  PASSWORD: process.env.password,
+  PORT: process.env.PORT || 8000,
+  HOST: process.env.DB_HOST,
+  DBPORT: Number(process.env.DB_PORT),
+  DATABASE: process.env.DB_NAME,
+  USER: process.env.DB_USER,
+  PASSWORD: process.env.DB_PASS,
 
   DATABASE_URL:
    process.env.DB_URL || 'postgresql://krill@localhost/oc',

@@ -20,7 +20,7 @@ type project = {
 const ImagesService = {
   // DATABASE SERVICES
   getAllProjects(db: Knex) {
-    console.log('=====IN getALlProjects=====')
+    // console.log('=====IN getALlProjects=====')
     return db.from('projects').select('*')
   },
 

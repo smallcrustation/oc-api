@@ -1,25 +1,24 @@
 import app from './app'
-import {PORT, HOST, DBPORT, DATABASE, USER, PASSWORD} from './config'
+import {PORT, HOST, DBPORT, DATABASE, USER, PASSWORD, DATABASE_URL} from './config'
 import knex from 'knex'
 const cloudinary = require('cloudinary').v2
 
 // CONNECT WITH DATABASE & SET IT AS AN EXPRESS VAR
 const db = knex({
   client: 'pg',
-  connection: {
-    host: HOST,
-    port: DBPORT,
-    database: DATABASE,
-    user: USER,
-    password: PASSWORD,
-    debug: true,
-    ssl: true // TURN THIS OFF IF USING LOCAL DB
-  }
+  connection: DATABASE_URL + '?ssl-true'
+  
+  // for dev
+  // {
+  //   host: HOST,
+  //   port: DBPORT,
+  //   database: DATABASE,
+  //   user: USER,
+  //   password: PASSWORD,
+  //   debug: true,
+  //   // ssl: true // TURN THIS OFF IF USING LOCAL DB
+  // }
 })
-
-console.log('======HOST======',HOST)
-console.log('======DB======',DATABASE)
-console.log('======USER======',USER)
 
 // ------ TESTS IF CONNECTED TO DATABASE ------
 // db.raw("SELECT 1").then(() => {
