@@ -13,7 +13,7 @@ const db = knex({
     user: USER,
     password: PASSWORD,
     debug: true,
-    // ssl: true // TURN THIS OFF IF USING LOCAL DB
+    ssl: true // TURN THIS OFF IF USING LOCAL DB
   }
 })
 
