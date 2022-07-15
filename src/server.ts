@@ -17,9 +17,9 @@ const db = knex({
   }
 })
 
-console.log(HOST)
-console.log(DATABASE)
-console.log(USER)
+console.log('======HOST======',HOST)
+console.log('======DB======',DATABASE)
+console.log('======USER======',USER)
 
 // ------ TESTS IF CONNECTED TO DATABASE ------
 // db.raw("SELECT 1").then(() => {
