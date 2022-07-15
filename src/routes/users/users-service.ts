@@ -4,7 +4,12 @@ import Knex from 'knex'
 import { ADMIN_SECRET } from '../../config'
 
 type NewUser = {
-  secret?: string
+  secret: string
+  username: string
+  password: string
+}
+
+type CleanNewUser = {
   username: string
   password: string
 }
@@ -20,7 +25,8 @@ const UsersService = {
 
     // check for admin secret
     if (newUser.secret !== ADMIN_SECRET){
-      return (result.error = `Incorrect Secret in response body`)
+      throw new Error(`Incorrect Secret in response body`)
+      // return (result.error = `Incorrect Secret in response body`)
     }
 
     // https://effectivetypescript.com/2020/05/26/iterate-objects/
@@ -28,11 +34,13 @@ const UsersService = {
     for (key in newUser) {
       // check if data
       if (!newUser.username || !newUser.password) {
-        return (result.error = `missing ${key} in response body`)
+        throw new Error(`missing ${key} in response body`)
+        // return (result.error = `missing ${key} in response body`)
       }
       // check for whitespace
       if (newUser[key].startsWith(' ') || newUser[key].endsWith(' ')) {
-        result.error = `${key} end or begin with spaces`
+      throw new Error(`missing ${key} in response body`)
+        // result.error = `${key} end or begin with spaces`
       }
     }
 
@@ -41,7 +49,8 @@ const UsersService = {
       .where('username', newUser.username)
       .select('*')
     if (userFound.length) {
-      result.error = 'Username already exists'
+      throw new Error(`Username already exists`)
+      // result.error = 'Username already exists'
     }
 
     // check password is at least 5 chars long and max 72
@@ -57,14 +66,14 @@ const UsersService = {
     return bcrypt.hash(password, 10)
   },
 
-  sanitizeUser(newUser: NewUser){
+  sanitizeUser(newUser: CleanNewUser){
     return {
       username: xss(newUser.username),
       password: xss(newUser.password) // what if pass looks like html...
     }
   },
 
-  insertUser(db: Knex, newUser: NewUser){
+  insertUser(db: Knex, newUser: CleanNewUser){
     return db('oc_users')
       .insert(newUser)
       .returning('*')

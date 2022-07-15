@@ -93,7 +93,7 @@ imagesRouter
       const getProject = await ImagesService.getProjectByName(req.app.get('db'), projectReq.name)
 
       //deconstruct/clean getProject into a clean object
-      var DbProject = {...getProject['0']}
+      var DbProject = {...getProject[0]}
 
       // COMBINE PROJECT INFO
       const mergedProject = {...DbProject, ...projectCorrectKeys}
