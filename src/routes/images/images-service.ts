@@ -51,11 +51,42 @@ const ImagesService = {
     }
   },
 
+  async getCommercialProjectImageUrls(project: string) {
+    try {
+      let cloudinaryData = await cloudinary.search
+        .expression(`folder:oc/commercial-projects/${project}`)
+        // .sort_by('public_id', 'desc')
+        .execute()
+
+      let imgUrls: Array<string> = []
+
+      for (let i = 0; i < cloudinaryData.resources.length; i++) {
+        if (cloudinaryData.resources[i].url) {
+          imgUrls.push(cloudinaryData.resources[i].secure_url)
+        }
+      }
+
+      return imgUrls
+    } catch (e) {
+      return e
+    }
+  },
+
   async getListProjectFolders() {
     try {
       let projectsFoldersList = await cloudinary.api.sub_folders('oc/projects')
       return projectsFoldersList.folders
     } catch (e) {
+      return e
+    }
+  },
+
+  async getListCommercialProjectFolders(){
+    try{
+      let commercialProjectsFoldersList = await cloudinary.api.sub_folders('oc/commercial-projects')
+      return commercialProjectsFoldersList.folders
+
+    } catch(e){
       return e
     }
   },
@@ -118,6 +149,8 @@ const ImagesService = {
   async updateProjectsUrls(db: Knex) {
     try {
       // get project names from Cloudinary
+      // console.log('==== GET PROJECTS ====')
+
       const projectsList = await this.getListProjectFolders()
 
       for (let i = 0; i < projectsList.length; i++) {
@@ -140,6 +173,32 @@ const ImagesService = {
           let newProject = await this.getProjectByName(db, projectName)
         }
       }
+
+           // get COMMERCIAL project names from Cloudinary
+          //  console.log('==== GET COMMERCIAL PROJECTS ====')
+           const commercialProjectsList = await this.getListCommercialProjectFolders()
+           for (let i = 0; i < commercialProjectsList.length; i++) {
+             let projectName = commercialProjectsList[i].name
+     
+             // get project URLS from Cloudinary
+             let projectUrls = await this.getCommercialProjectImageUrls(projectName)
+     
+             let tempProject: project = await {name: projectName, img_urls: projectUrls, data_3: 'commercial'}
+     
+             // check if project exists already in db
+             let DBproject = await this.getProjectByName(db, projectName)
+             // if project already exists update it
+            //  console.log('===',DBproject,'===')
+             if (DBproject.length > 0) {
+               await this.updateProjectByName(db, tempProject)
+               // let updatedProject = await this.getProjectByName(db, projectName)
+             } else {
+               // project does not exist make a new one
+               await this.insertProject(db, tempProject)
+              //  console.log(tempProject)
+               let newProject = await this.getProjectByName(db, projectName)
+             }
+           }
     } catch (e) {
       return e
     }

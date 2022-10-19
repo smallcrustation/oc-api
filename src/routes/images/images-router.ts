@@ -23,7 +23,6 @@ imagesRouter.route('/project-folders').get(async (req, res, next) => {
 imagesRouter.route('/projects').get(async (req, res, next) => {
   try {
     // console.log('======BEFORE getAllProjects=====')
-    // console.log(req.app.get('db'))
     let projectsList = await ImagesService.getAllProjects(req.app.get('db'))
     // console.log('======projectsList=====',projectsList)
     res.status(200).json({ projectsList }).end()
@@ -33,7 +32,7 @@ imagesRouter.route('/projects').get(async (req, res, next) => {
   }
 })
 
-// update our DB 'projects' urls
+// update our DB 'projects' urls from CLOUDINARY
 imagesRouter.route('/update-project-urls').get(async (req, res, next) => {
   try {
     // save project urls to our database, from cloudinary data

@@ -1,0 +1,2 @@
+When switching between DEVELOPMENT and PRODUCTION database connection
+  - edit config.ts & server.ts for database connection

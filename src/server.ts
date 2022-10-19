@@ -5,22 +5,23 @@ const cloudinary = require('cloudinary').v2
 
 // CONNECT WITH DATABASE & SET IT AS AN EXPRESS VAR
 const db = knex({
+  // client: 'pg',
+  // connection:{
+  //   connectionString: DATABASE_URL,
+  //   ssl: { rejectUnauthorized: false } // SSL issues w pg8+ https://stackoverflow.com/questions/61785729/knex-heroku-error-self-signed-certificate
+  // }
+  
+  // ==== FOR DEV ==== also change config.ts
   client: 'pg',
   connection:{
-    connectionString: DATABASE_URL,
-    ssl: { rejectUnauthorized: false } // SSL issues w pg8+ https://stackoverflow.com/questions/61785729/knex-heroku-error-self-signed-certificate
+    host: HOST,
+    port: DBPORT,
+    database: DATABASE,
+    user: USER,
+    password: PASSWORD,
+    debug: true,
+    // ssl: true // TURN THIS OFF IF USING LOCAL DB
   }
-  
-  // for dev
-  // {
-  //   host: HOST,
-  //   port: DBPORT,
-  //   database: DATABASE,
-  //   user: USER,
-  //   password: PASSWORD,
-  //   debug: true,
-  //   // ssl: true // TURN THIS OFF IF USING LOCAL DB
-  // }
 })
 
 

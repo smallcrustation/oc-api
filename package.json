@@ -15,7 +15,7 @@
     "build:dev": "tsc --watch --preserveWatchOutput",
     "dev": "npm run build:dev & npm run start:dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "postgrator --config src/postgrator-config.ts",
+    "migrate": "postgrator 2 --config src/postgrator-config.ts",
     "migrate:dev": "postgrator --config src/postgrator-config.ts",
     "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate",
     "seed": "psql krill -d oc -f ./seeds/seed.tables.sql",
